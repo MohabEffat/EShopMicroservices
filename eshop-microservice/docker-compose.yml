@@ -8,6 +8,9 @@ services:
 
   distributedcache:
     image: redis
+  
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
 
 
   catalog.api:
@@ -31,5 +34,6 @@ services:
 volumes:
   postgres_catalog:
   postgres_basket:
+  mssql_orderdb:
 
 

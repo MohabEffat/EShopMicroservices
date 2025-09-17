@@ -1,18 +1,17 @@
-using Ordering.Api;
-using Ordering.Application;
-using Ordering.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddApiServices()
+    .AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
-    .AddApplicationServices();
-
+    .AddApiServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseApiConfiguration();
 
-
+if (app.Environment.IsDevelopment())
+{
+    await app.InitializeDatabaseAsync();
+}
 app.Run();

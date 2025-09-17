@@ -11,9 +11,9 @@
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(value);
 
-            if (value.Length != RequiredLength)
+            if (value.Length < RequiredLength)
                 throw new ArgumentOutOfRangeException(nameof(value),
-                    $"Order name must be exactly {RequiredLength} characters long.");
+                    $"Order name be at least {RequiredLength} characters long.");
 
             return new OrderName(value);
         }

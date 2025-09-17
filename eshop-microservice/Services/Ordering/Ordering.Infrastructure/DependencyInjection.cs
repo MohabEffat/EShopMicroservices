@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Ordering.Application.Data;
 
 namespace Ordering.Infrastructure
 {
@@ -8,12 +7,19 @@ namespace Ordering.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            //// Add database context
-            //services.AddDbContext<OrderingDbContext>(options =>
-            //    options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
-            //// Add repositories
-            //services.AddScoped<IOrderRepository, OrderRepository>();
-            //// Add other infrastructure services as needed
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            services.AddScoped<ISaveChangesInterceptor ,AuditableEntityInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor ,DispatchDomainEventsInterceptor>();
+
+            services.AddDbContext<ApplicationDbContext>((sp, options) =>
+            {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
             return services;
         }
     }
