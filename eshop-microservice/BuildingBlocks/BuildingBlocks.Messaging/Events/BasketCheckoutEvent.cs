@@ -18,7 +18,7 @@ namespace BuildingBlocks.Messaging.Events
         public string CardNumber { get; set; } = default!;
         public string Expiration { get; set; } = default!;
         public string CVV { get; set; } = default!;
-        public int PaymentMethod { get; set; } = d  efault!;
+        public int PaymentMethod { get; set; } = default!;
         // Basket Items
         //public List<BasketItemEvent> BasketItems { get; set; } = new List<BasketItemEvent>();
     }
