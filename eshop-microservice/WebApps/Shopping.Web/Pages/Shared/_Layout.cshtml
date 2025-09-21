@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EShop Microservices</title>
+
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            color: white;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .nav-link:hover {
+                transform: translateY(-2px);
+            }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+        }
+
+        footer {
+            background-color: #212529;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <i class="fas fa-shopping-bag me-2"></i>EShop
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 @(ViewContext.RouteData.Values["Page"].ToString() == "/Index" ? "active" : "")"
+                               asp-area="" asp-page="/Index">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 @(ViewContext.RouteData.Values["Page"].ToString() == "/ProductList" ? "active" : "")"
+                               asp-area="" asp-page="/ProductList">
+                                <i class="fas fa-box me-1"></i> Products
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 @(ViewContext.RouteData.Values["Page"].ToString() == "/OrderList" ? "active" : "")"
+                               asp-area="" asp-page="/OrderList">
+                                <i class="fas fa-clipboard-list me-1"></i> Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 @(ViewContext.RouteData.Values["Page"].ToString() == "/Contact" ? "active" : "")"
+                               asp-area="" asp-page="/Contact">
+                                <i class="fas fa-envelope me-1"></i> Contact
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        <div class="input-group me-3">
+                            <input type="text" class="form-control" placeholder="Search products...">
+                            <button class="btn btn-outline-light" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <a class="btn btn-primary position-relative" asp-area="" asp-page="/Cart">
+                            <i class="fas fa-shopping-cart me-1"></i> Cart
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                3
+                                <span class="visually-hidden">items in cart</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-light">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="mb-3">About EShop</h5>
+                    <hr class="bg-white mb-3 mt-0 d-inline-block mx-auto" style="width: 60px; height: 2px;">
+                    <p class="mb-3">
+                        EShop is a modern e-commerce platform built with microservices architecture, providing a seamless shopping experience with a wide range of products.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <hr class="bg-white mb-3 mt-0 d-inline-block mx-auto" style="width: 60px; height: 2px;">
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a class="text-decoration-none text-white-50 hover-white" asp-page="/Index"><i class="fas fa-angle-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a class="text-decoration-none text-white-50 hover-white" asp-page="/ProductList"><i class="fas fa-angle-right me-2"></i>Products</a></li>
+                        <li class="mb-2"><a class="text-decoration-none text-white-50 hover-white" asp-page="/Cart"><i class="fas fa-angle-right me-2"></i>Cart</a></li>
+                        <li class="mb-2"><a class="text-decoration-none text-white-50 hover-white" asp-page="/OrderList"><i class="fas fa-angle-right me-2"></i>Orders</a></li>
+                        <li><a class="text-decoration-none text-white-50 hover-white" asp-page="/Contact"><i class="fas fa-angle-right me-2"></i>Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="mb-3">Contact Us</h5>
+                    <hr class="bg-white mb-3 mt-0 d-inline-block mx-auto" style="width: 60px; height: 2px;">
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-home me-2"></i> 123 E-Commerce St, Tech City</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@eshop.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> + 01 234 567 88</li>
+                        <li><i class="fas fa-print me-2"></i> + 01 234 567 89</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; @DateTime.Now.Year - EShop Microservices - All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

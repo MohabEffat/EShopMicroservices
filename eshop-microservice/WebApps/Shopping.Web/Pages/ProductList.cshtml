@@ -1,0 +1,113 @@
+@page
+@model Shopping.Web.Pages.ProductListModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<!-- Hero Section -->
+<div class="hero-section mb-4">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">Explore Our Products</h1>
+        <p class="lead">Discover our wide range of high-quality products at competitive prices.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-light p-3 rounded shadow-sm">
+                    <li class="breadcrumb-item"><a class="text-decoration-none" asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" asp-page="Product">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.SelectedCategory</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row g-4">
+        <!-- Sidebar -->
+        <div class="col-12 col-lg-3">
+            <!-- Categories Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Categories</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in Model.CategoryList)
+                        {
+                            <li class="list-group-item border-0">
+                                <a class="text-decoration-none d-flex justify-content-between align-items-center" 
+                                   asp-page="ProductList" 
+                                   asp-route-categoryId="@category">
+                                    @category
+                                    <i class="fas fa-chevron-right text-primary"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Featured Product Card -->
+            @if (Model.ProductList.Any())
+            {
+                var lastProduct = Model.ProductList.LastOrDefault();
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-star me-2"></i>Featured Product</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img asp-append-version="true" class="img-fluid rounded" src="~/images/product/@lastProduct.ImageUrl" alt="@lastProduct.Name" />
+                        </div>
+                        <h5 class="card-title">@lastProduct.Name</h5>
+                        <p class="card-text text-muted">@(lastProduct.Description?.Length > 100 ? lastProduct.Description.Substring(0, 100) + "..." : lastProduct.Description)</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-primary mb-0">$@lastProduct.Price</span>
+                            <a asp-page="ProductDetail" asp-route-productId="@lastProduct.Id" class="btn btn-sm btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Product Grid -->
+        <div class="col-12 col-lg-9">
+            <div class="row g-4">
+                @foreach (var product in Model.ProductList)
+                {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <partial name="_ProductItemPartial" model="@product" />
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+

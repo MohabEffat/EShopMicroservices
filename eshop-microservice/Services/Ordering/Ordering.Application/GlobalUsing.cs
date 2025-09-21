@@ -13,6 +13,9 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Ordering.Application.Exceptions;
 global using Ordering.Application.Extensions;
 global using BuildingBlocks.Pagination;
+global using MediatR;
+global using Microsoft.Extensions.Logging;
+global using Ordering.Domain.Events;
 
 
 

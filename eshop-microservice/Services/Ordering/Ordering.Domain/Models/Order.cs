@@ -61,6 +61,5 @@
                 _orderItems.Remove(orderItem);
             }
         }
-
     }
 }

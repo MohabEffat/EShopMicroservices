@@ -1,0 +1,140 @@
+@page
+@model Shopping.Web.Pages.Shared.CartModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-light p-3 rounded shadow-sm">
+                    <li class="breadcrumb-item"><a class="text-decoration-none" asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4 fw-bold">Your Shopping Cart</h1>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-0">
+                    @if (Model.ShoppingCartModel.Items.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" class="border-0">Product</th>
+                                        <th scope="col" class="border-0 text-center">Quantity</th>
+                                        <th scope="col" class="border-0 text-end">Price</th>
+                                        <th scope="col" class="border-0 text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cartItem in Model.ShoppingCartModel.Items)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="~/images/product/product-1.png" class="rounded me-3" style="width: 70px; height: 70px; object-fit: cover;" alt="@cartItem.ProductName" />
+                                                    <div>
+                                                        <h6 class="mb-0">@cartItem.ProductName</h6>
+                                                        <span class="badge bg-success">In Stock</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="input-group input-group-sm" style="width: 120px; margin: 0 auto;">
+                                                    <button class="btn btn-outline-secondary" type="button">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <input type="text" class="form-control text-center" value="@cartItem.Quantity">
+                                                    <button class="btn btn-outline-secondary" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="text-end fw-bold">$@(cartItem.Price * cartItem.Quantity)</td>
+                                            <td class="text-end">
+                                                <form asp-page-handler="removetocart" method="post">
+                                                    <button class="btn btn-sm btn-outline-danger rounded-circle">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <input type="hidden" asp-for="@cartItem.ProductId" name="ProductId" />
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                            <h3>Your cart is empty</h3>
+                            <p class="text-muted">Add items to your cart to continue shopping</p>
+                            <a asp-page="ProductList" class="btn btn-primary rounded-pill fw-bold mt-3">
+                                <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <span class="fw-bold">$@Model.ShoppingCartModel.TotalPrice</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Shipping</span>
+                        <span class="text-success">Free</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="fw-bold">Total</span>
+                        <span class="fw-bold text-primary h5 mb-0">$@Model.ShoppingCartModel.TotalPrice</span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a asp-page="CheckOut" class="btn btn-primary rounded-pill fw-bold">
+                            <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                        </a>
+                        <a asp-page="ProductList" class="btn btn-outline-secondary rounded-pill">
+                            <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="mb-3 fw-bold">We Accept</h6>
+                    <div class="d-flex gap-2">
+                        <i class="fab fa-cc-visa fa-2x text-muted"></i>
+                        <i class="fab fa-cc-mastercard fa-2x text-muted"></i>
+                        <i class="fab fa-cc-amex fa-2x text-muted"></i>
+                        <i class="fab fa-cc-paypal fa-2x text-muted"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

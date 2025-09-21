@@ -1,0 +1,138 @@
+@page
+@model Shopping.Web.Pages.ProductDetailModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-light p-3 rounded shadow-sm">
+                    <li class="breadcrumb-item"><a class="text-decoration-none" asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" asp-page="ProductList">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Product.Name</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Product Image -->
+        <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-0">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded" src="~/images/product/@Model.Product.ImageUrl" alt="@Model.Product.Name" />
+                        <div class="product-badge bg-primary text-white position-absolute top-0 end-0 m-3 px-3 py-2 rounded">New</div>
+                    </div>
+                    <div class="product-thumbnails d-flex justify-content-center mt-3">
+                        <div class="thumbnail-item mx-2 border rounded p-1 active">
+                            <img class="img-fluid" src="~/images/product/@Model.Product.ImageUrl" alt="Thumbnail 1" style="width: 60px; height: 60px; object-fit: cover;" />
+                        </div>
+                        <div class="thumbnail-item mx-2 border rounded p-1">
+                            <img class="img-fluid" src="~/images/product/@Model.Product.ImageUrl" alt="Thumbnail 2" style="width: 60px; height: 60px; object-fit: cover;" />
+                        </div>
+                        <div class="thumbnail-item mx-2 border rounded p-1">
+                            <img class="img-fluid" src="~/images/product/@Model.Product.ImageUrl" alt="Thumbnail 3" style="width: 60px; height: 60px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details & Add to Cart -->
+        <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="fw-bold mb-3">@Model.Product.Name</h2>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-muted">(4.5/5) - 12 Reviews</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-primary fw-bold mb-0">$@Model.Product.Price</h3>
+                        <p class="text-muted"><del>$@(Model.Product.Price + 120)</del> (Save $120)</p>
+                    </div>
+                    
+                    <p class="mb-4">@Model.Product.Description</p>
+                    
+                    <form method="post" id="add_cart_form" class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="colors" class="form-label">Color</label>
+                                <select asp-for="Color" class="form-select" id="colors">
+                                    <option selected>Black</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Green">Green</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Quantity" class="form-label">Quantity</label>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-outline-secondary quantity-left-minus" data-type="minus">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input asp-for="Quantity" type="text" class="form-control text-center" id="Quantity" name="quantity" min="1" max="100" value="1">
+                                    <button type="button" class="btn btn-outline-secondary quantity-right-plus" data-type="plus">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">
+                                <i class="fas fa-shopping-cart me-2"></i>Add To Cart
+                            </button>
+                        </div>
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    </form>
+                    
+                    <div class="d-flex justify-content-around p-3 bg-light rounded mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-truck fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">Free Shipping</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-credit-card fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">Secure Payment</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-undo fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">30-Day Returns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="col-12">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        @Model.Product.Description                        
+                    </p>
+                    <p class="card-text">
+                        @Model.Product.Description                        
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

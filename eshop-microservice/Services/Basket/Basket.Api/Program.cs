@@ -1,8 +1,3 @@
-using BuildingBlocks.Exceptions.Handler;
-using Discount.Grpc;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services To Container
@@ -45,6 +40,8 @@ builder.Services.AddMarten(options =>
     options.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);
     options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 }).UseLightweightSessions();
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
