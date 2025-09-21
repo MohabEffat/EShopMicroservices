@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Messaging.Events;
+using BuildingBlocks.Messaging.Events;
 using MassTransit;
 
 namespace Basket.Api.Basket.CheckoutBasket
@@ -27,10 +27,18 @@ namespace Basket.Api.Basket.CheckoutBasket
             {
                  return new CheckoutBasketResult(false);
             }
-
+        
             var eventMessage = command.CheckoutBasket.Adapt<BasketCheckoutEvent>();
-
             eventMessage.TotalPrice = basket.TotalPrice;
+            
+            // Add basket items to the event
+            // eventMessage.BasketItems = basket.Items.Select(item => new BasketItemEvent
+            // {
+            //     ProductId = item.ProductId,
+            //     ProductName = item.ProductName,
+            //     Quantity = item.Quantity,   
+            //     Price = item.Price
+            // }).ToList();
 
             await publishEndpoint.Publish(eventMessage, cancellationToken);
 

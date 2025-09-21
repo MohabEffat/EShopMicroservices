@@ -66,37 +66,11 @@
                     
                     <p class="mb-4">@Model.Product.Description</p>
                     
-                    <form method="post" id="add_cart_form" class="mb-4">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="colors" class="form-label">Color</label>
-                                <select asp-for="Color" class="form-select" id="colors">
-                                    <option selected>Black</option>
-                                    <option value="Blue">Blue</option>
-                                    <option value="Red">Red</option>
-                                    <option value="Green">Green</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Quantity" class="form-label">Quantity</label>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary quantity-left-minus" data-type="minus">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input asp-for="Quantity" type="text" class="form-control text-center" id="Quantity" name="quantity" min="1" max="100" value="1">
-                                    <button type="button" class="btn btn-outline-secondary quantity-right-plus" data-type="plus">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">
-                                <i class="fas fa-shopping-cart me-2"></i>Add To Cart
-                            </button>
-                        </div>
+                    <form method="post" asp-page-handler="AddToCart" class="mb-4">
                         <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">
+                            <i class="fas fa-shopping-cart me-2"></i>Add To Cart
+                        </button>
                     </form>
                     
                     <div class="d-flex justify-content-around p-3 bg-light rounded mb-4">

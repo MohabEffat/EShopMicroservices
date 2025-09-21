@@ -35,15 +35,26 @@ namespace Shopping.Web.Pages
             var productResponse = await catalogService.GetProduct(productId);
 
             var basket = await basketService.LoadUserBasket();
-
-            basket.Items.Add(new ShoppingCartItemModel
+            
+            // Check if product already exists in cart
+            var existingItem = basket.Items.FirstOrDefault(item => item.ProductId == productId);
+            if (existingItem != null)
             {
-                ProductId = productId,
-                ProductName = productResponse.Product.Name,
-                Price = productResponse.Product.Price,
-                Quantity = 1,
-                Color = "Black" 
-            });
+                // If product already exists, increase quantity
+                existingItem.Quantity += 1;
+            }
+            else
+            {
+                // If product doesn't exist, add it
+                basket.Items.Add(new ShoppingCartItemModel
+                {
+                    ProductId = productId,
+                    ProductName = productResponse.Product.Name,
+                    Price = productResponse.Product.Price,
+                    Quantity = 1,
+                    Color = "Black"
+                });
+            }
 
             await basketService.StoreBasket(new StoreBasketRequest(basket));
 

@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Messaging.Events;
+using BuildingBlocks.Messaging.Events;
 using MassTransit;
 using Ordering.Application.Orders.Commands.CreateOrder;
 
@@ -32,6 +32,16 @@ namespace Ordering.Application.EventHandlers.IntegrationEvents
                 message.Expiration, message.CVV,
                 message.PaymentMethod);
 
+            // Use the basket items from the message instead of hardcoded values
+            // var orderItems = message.BasketItems?.Select(item => 
+            //     new OrderItemDto(orderId, item.ProductId, item.Quantity, item.Price))?.ToList() 
+            //     ?? new List<OrderItemDto>();
+
+            // // If no basket items were provided, log a warning but don't fail
+            // if (orderItems.Count == 0)
+            // {
+            //     logger.LogWarning("No basket items found in checkout event for user {UserName}", message.UserName);
+            // }            var orderItems = new List<OrderItemDto>
             var orderItems = new List<OrderItemDto>
             {
                 new(orderId, new Guid("9e4e47b1-8f7e-4d78-b6a3-18a51389d8e2"), 2, message.TotalPrice),

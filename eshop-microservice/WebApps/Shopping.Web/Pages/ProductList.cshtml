@@ -40,9 +40,9 @@
                         @foreach (var category in Model.CategoryList)
                         {
                             <li class="list-group-item border-0">
-                                <a class="text-decoration-none d-flex justify-content-between align-items-center" 
-                                   asp-page="ProductList" 
-                                   asp-route-categoryId="@category">
+                                <a class="text-decoration-none d-flex justify-content-between align-items-center"
+                                   asp-page="ProductList"
+                                   asp-route-categoryName="@category">
                                     @category
                                     <i class="fas fa-chevron-right text-primary"></i>
                                 </a>
@@ -69,6 +69,12 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="h5 text-primary mb-0">$@lastProduct.Price</span>
                             <a asp-page="ProductDetail" asp-route-productId="@lastProduct.Id" class="btn btn-sm btn-outline-primary">View Details</a>
+                            <form method="post" asp-page-handler="AddToCart">
+                                <input type="hidden" name="productId" value="@lastProduct.Id" />
+                                <button type="submit" class="btn btn-sm btn-primary ms-2">
+                                    <i class="fas fa-shopping-cart me-1"></i>Add to Cart
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

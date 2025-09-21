@@ -1,4 +1,4 @@
-﻿namespace BuildingBlocks.Messaging.Events
+namespace BuildingBlocks.Messaging.Events
 {
     public record BasketCheckoutEvent : IntegrationEvent
     {
@@ -18,6 +18,16 @@
         public string CardNumber { get; set; } = default!;
         public string Expiration { get; set; } = default!;
         public string CVV { get; set; } = default!;
-        public int PaymentMethod { get; set; } = default!;
+        public int PaymentMethod { get; set; } = d  efault!;
+        // Basket Items
+        //public List<BasketItemEvent> BasketItems { get; set; } = new List<BasketItemEvent>();
     }
+
+    // public record BasketItemEvent
+    // {
+    //     public Guid ProductId { get; set; }
+    //     public string ProductName { get; set; } = default!;
+    //     public int Quantity { get; set; }
+    //     public decimal Price { get; set; }
+    // }
 }

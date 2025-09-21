@@ -62,18 +62,25 @@ namespace Shopping.Web.Pages
                 return StatusCode(500, "Basket could not be loaded.");
             }
 
-            basket.Items.Add(new ShoppingCartItemModel
+            var existingItem = basket.Items.FirstOrDefault(item => item.ProductId == productId);
+            if (existingItem != null)
             {
-                ProductId = productId,
-                ProductName = productResponse.Product.Name,
-                Price = productResponse.Product.Price,
-                Quantity = Quantity,
-                Color = Color
-            });
+                existingItem.Quantity += Quantity;
+            }
+            else
+            {
+                basket.Items.Add(new ShoppingCartItemModel
+                {
+                    ProductId = productId,
+                    ProductName = productResponse.Product.Name,
+                    Price = productResponse.Product.Price,
+                    Quantity = Quantity,
+                    Color = Color
+                });
+            }
 
             await basketService.StoreBasket(new StoreBasketRequest(basket));
 
-            // Redirect to Cart page
             return RedirectToPage("Cart");
         }
     }
