@@ -94,6 +94,13 @@ All services run inside **Docker containers** and communicate through **REST, gR
 
 ---
 
+## 🎓 Learning Resource
+
+If you're interested in diving deeper into Microservices architecture with .NET, I followed this great course:  
+[Microservices Architecture and Implementation on .NET (Udemy)](https://www.udemy.com/course/microservices-architecture-and-implementation-on-dotnet/)
+
+---
+
 ## 🤝 Contributions
 
 Suggestions and improvements are welcome!  
