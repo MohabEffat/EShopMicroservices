@@ -33,20 +33,21 @@ namespace Ordering.Application.EventHandlers.IntegrationEvents
                 message.PaymentMethod);
 
             // Use the basket items from the message instead of hardcoded values
-            // var orderItems = message.BasketItems?.Select(item => 
-            //     new OrderItemDto(orderId, item.ProductId, item.Quantity, item.Price))?.ToList() 
-            //     ?? new List<OrderItemDto>();
+            var orderItems = message.BasketItems?.Select(item =>
+                new OrderItemDto(orderId, item.ProductId, item.Quantity, item.Price))?.ToList()
+                ?? new List<OrderItemDto>();
 
-            // // If no basket items were provided, log a warning but don't fail
-            // if (orderItems.Count == 0)
-            // {
-            //     logger.LogWarning("No basket items found in checkout event for user {UserName}", message.UserName);
-            // }            var orderItems = new List<OrderItemDto>
-            var orderItems = new List<OrderItemDto>
+            // If no basket items were provided, log a warning but don't fail
+            if (orderItems.Count == 0)
             {
-                new(orderId, new Guid("9e4e47b1-8f7e-4d78-b6a3-18a51389d8e2"), 2, message.TotalPrice),
-                new(orderId, new Guid("3f6f8d46-b9a4-4bbd-bc91-403bcf00e7cd"), 3, message.TotalPrice)
-            };
+                logger.LogWarning("No basket items found in checkout event for user {UserName}", message.UserName);
+            }
+
+            //var orderItems = new List<OrderItemDto>
+            //{
+            //    new(orderId, new Guid("9e4e47b1-8f7e-4d78-b6a3-18a51389d8e2"), 2, message.TotalPrice),
+            //    new(orderId, new Guid("3f6f8d46-b9a4-4bbd-bc91-403bcf00e7cd"), 3, message.TotalPrice)
+            //};
 
             var orderDto = new OrderDto(
                 orderId,
@@ -56,7 +57,8 @@ namespace Ordering.Application.EventHandlers.IntegrationEvents
                 addressDto,
                 paymentDto,
                 OrderStatus.Pending,
-                orderItems
+                orderItems,
+                message.TotalPrice
             );
 
             return new CreateOrderCommand(orderDto);

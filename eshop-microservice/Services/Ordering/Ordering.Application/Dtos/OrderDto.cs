@@ -8,5 +8,6 @@
     AddressDto BillingAddress,
     PaymentDto Payment,
     OrderStatus Status,
-    List<OrderItemDto> OrderItems);
+    List<OrderItemDto> OrderItems,
+    decimal TotalPrice);
 }

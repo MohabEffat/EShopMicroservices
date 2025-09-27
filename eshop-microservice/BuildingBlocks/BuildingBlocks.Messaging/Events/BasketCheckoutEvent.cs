@@ -19,15 +19,6 @@ namespace BuildingBlocks.Messaging.Events
         public string Expiration { get; set; } = default!;
         public string CVV { get; set; } = default!;
         public int PaymentMethod { get; set; } = default!;
-        // Basket Items
-        //public List<BasketItemEvent> BasketItems { get; set; } = new List<BasketItemEvent>();
+        public List<BasketItemEvent> BasketItems { get; set; } = new ();
     }
-
-    // public record BasketItemEvent
-    // {
-    //     public Guid ProductId { get; set; }
-    //     public string ProductName { get; set; } = default!;
-    //     public int Quantity { get; set; }
-    //     public decimal Price { get; set; }
-    // }
 }

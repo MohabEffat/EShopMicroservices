@@ -29,16 +29,18 @@ namespace Basket.Api.Basket.CheckoutBasket
             }
         
             var eventMessage = command.CheckoutBasket.Adapt<BasketCheckoutEvent>();
+
             eventMessage.TotalPrice = basket.TotalPrice;
-            
+
             // Add basket items to the event
-            // eventMessage.BasketItems = basket.Items.Select(item => new BasketItemEvent
-            // {
-            //     ProductId = item.ProductId,
-            //     ProductName = item.ProductName,
-            //     Quantity = item.Quantity,   
-            //     Price = item.Price
-            // }).ToList();
+            eventMessage.BasketItems = basket.Items.Select(item => new BasketItemEvent
+            {
+                ProductId = item.ProductId,
+                ProductName = item.ProductName,
+                Color = item.Color,
+                Quantity = item.Quantity,
+                Price = item.Price
+            }).ToList();
 
             await publishEndpoint.Publish(eventMessage, cancellationToken);
 
